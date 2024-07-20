@@ -1,0 +1,15 @@
+ASGI_WEB_SERVER:
+  type: hypercorn
+  config:
+    application_path: app:app
+    bind: 0.0.0.0:8000
+    workers: 1
+
+OPENAPI:
+  enabled: True
+  openapi_version: "2.0"
+  title: "Cats API Docs"
+  swagger_enabled: True
+  rapidoc_enabled: True
+  redoc_enabled: True
+  stoplight_elements_enabled: True

@@ -1,0 +1,10 @@
+ASGI_WEB_SERVER:
+  type: hypercorn
+  config:
+    application_path: app:app
+    bind: 0.0.0.0:8000
+    workers: 1
+
+LOGGING: ./logging_config.py
+
+LOGGING_REQUESTS: ./logging_requests_config.py

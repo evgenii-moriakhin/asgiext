@@ -1,0 +1,6 @@
+ASGI_WEB_SERVER:
+  type: hypercorn
+  config:
+    application_path: app:app
+    bind: 0.0.0.0:8000
+    workers: 1

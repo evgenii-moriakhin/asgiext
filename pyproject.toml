@@ -1,0 +1,168 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.sdist]
+include = [
+  "src/",
+]
+
+[project]
+authors = [
+  {name = "Evgenii Moryakhin", email = "evgenii.moriakhin@gmail.com"},
+]
+classifiers = [
+  "Development Status :: 1 - Planning",
+  "Environment :: Web Environment",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python",
+  "Topic :: Internet :: WWW/HTTP",
+  "Topic :: Software Development :: Libraries",
+  "Topic :: Software Development",
+  "Typing :: Typed",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Information Technology",
+  "Intended Audience :: System Administrators",
+  "Topic :: Internet",
+  "Topic :: Internet :: WWW/HTTP :: HTTP Servers",
+  "Topic :: Software Development :: Libraries :: Application Frameworks",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+dependencies = [
+  "hypercorn==0.16.0",
+  "anyio==4.3.0",
+  "httpx==0.27.0",
+  "typing-extensions==4.11.0",
+  "motor==3.4.0",
+  "prometheus_client==0.20.0",
+  "apispec==6.6.1",
+  "msgspec==0.18.6",
+  "pyyaml==6.0.1",
+  "lxml==5.2.1",
+  "pydantic==2.7.1",
+  "pydantic-settings==2.2.1",
+  "redis==5.0.4",
+  "rich==13.7.1",
+  "structlog==24.1.0",
+]
+maintainers = [
+  {name = "Evgenii Moryakhin", email = "evgenii.moriakhin@gmail.com"},
+]
+name = "asgiext"
+readme = "README.md"
+requires-python = "~=3.9"
+version = "0.1.0"
+
+[project.urls]
+Repository = "https://github.com/evgenii-moriakhin/asgiext"
+
+[project.optional-dependencies]
+starlette = [
+  "starlette==0.38.0",
+]
+quart = [
+  "quart==0.19.6",
+]
+gunicorn = [
+  "gunicorn==21.2.0",
+]
+uvicorn = [
+  "uvicorn==0.29.0",
+]
+gunicorn_uvicorn = [
+  "asgiext[gunicorn, uvicorn]",
+]
+hypercorn = [
+  "hypercorn==0.16.0",
+]
+granian = [
+  "granian==1.2.1",
+]
+all = [
+  "asgiext[starlette, quart, gunicorn, uvicorn, hypercorn, granian]",
+]
+dev = [
+  "ruff==0.4.4",
+  "pyright==1.1.358",
+  "pytest",
+  "pytest-asyncio",
+  "pytest-mock",
+  "types-pyyaml",
+  "motor-types",
+  "polyfactory",
+  "types-redis",
+  "fakeredis",
+  "asgiext[all]",
+]
+
+[tool.pytest.ini_options]
+pythonpath = "src/" # for correct import resolution from tests
+
+[tool.pyright]
+typeCheckingMode = "strict"
+include = [
+  "src",
+  "tests",
+]
+extraPaths = [
+  "src/", 
+]
+pythonVersion = "3.9"
+pythonPlatform = "Linux"
+
+
+[tool.ruff]
+lint.select = [
+  "ALL",
+]
+
+lint.ignore = [
+  "A003", # flake8-builtins - class attribute {name} is shadowing a python builtin
+  "D100", # pydocstyle - missing docstring in public module
+  "D101", # pydocstyle - missing docstring in public class
+  "D102", # pydocstyle - missing docstring in public method
+  "D103", # pydocstyle - missing docstring in public function
+  "D104", # pydocstyle - missing docstring in public package
+  "D105", # pydocstyle - missing docstring in magic method
+  "D106", # pydocstyle - missing docstring in public nested class
+  "D107", # pydocstyle - missing docstring in __init__
+  "D202", # pydocstyle - no blank lines allowed after function docstring
+  "D205", # pydocstyle - 1 blank line required between summary line and description
+  "D415", # pydocstyle - first line should end with a period, question mark, or exclamation point
+  "ISC001", # Ruff formatter incompatible
+  "COM812", # Ruff formatter incompatible
+  "UP007", # Annotation for pydantic Base Model or msgspec Struct does not support some new typing syntax on the current version of python 3.9
+  "PGH003", # ability to ignore typing errors using type: ignore
+  "ANN101", # disable annotations for "self"
+  "ANN102", # disable annotations for "cls"
+]
+line-length = 120
+src = [
+  "src",
+  "tests",
+]
+target-version = "py39"
+output-format = "full"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = [
+  "S101", # to use assertions in tests is necessary
+  "PLR2004", # magic values in tests are allowed
+  "ANN", # annotations in tests are optional
+  "ARG002", # unused arguments in tests can be
+  "PLR0913", # too many arguments allowed in tests
+  "SLF001", # private access in tests are allowed
+]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.mccabe]
+max-complexity = 12
+
+[tool.ruff.lint.isort]
+known-first-party = [
+  "asgiext",
+  "tests",
+]
